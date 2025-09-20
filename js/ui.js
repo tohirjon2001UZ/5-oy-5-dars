@@ -16,17 +16,16 @@ export function ui(cars) {
     const elEdit = clone.querySelector(".js-edit");
 
     // ID
-
-    elInfo.id=car.id
-    elDelete.id=car.id
-    elEdit.id=car.id
+    elInfo.href = `/pages/details.html?id=${car.id}`;
+    elDelete.id = car.id;
+    elEdit.id = car.id;
     // Content
     elName.innerText = car.name;
     elDescription.innerText = car.description;
-    elCountry.innerText=car.country
-    elCategory.innerText=car.category
-    elColor.innerText=car.colorName
-    elColorBadge.style.backgroundColor=car.color
+    elCountry.innerText = car.country;
+    elCategory.innerText = car.category;
+    elColor.innerText = car.colorName;
+    elColorBadge.style.backgroundColor = car.color;
 
     // Append
     elCadrContainer.appendChild(clone);
