@@ -21,6 +21,27 @@
 
     <!-- Main -->
     <main>
+      <div class="flex gap-4 mt-3 ml-6">
+        <select
+          id="typeSelect"
+          class="border border-gray-300 rounded px-2 py-1"
+        >
+          <option disabled selected>Select</option>
+          <option value="country">Country</option>
+          <option value="category">Category</option>
+          <option value="color">Color</option>
+        </select>
+
+        <select
+          id="valueSelect"
+          class="border border-gray-300 rounded px-2 py-1"
+        >
+          <option disabled selected>Select</option>
+        </select>
+        <button id="btnAllCars" class="btn btn-neutral">All</button>
+      </div>
+
+      <div id="results" class="mt-4"></div>
       <section class="py-10">
         <div class="container mx-auto px-5">
           <ul class="grid grid-cols-3 gap-5" id="cadrContainer"></ul>
