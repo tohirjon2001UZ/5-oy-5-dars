@@ -1,7 +1,6 @@
 import { checkAuth } from "./check-auth.js";
 import { BASE_URL, LOADER_COUNT } from "./constants.js";
 import {
-  elBtnAllCars,
   elCadrLoader,
   elCardSkletonTemplate,
   elInfoModal,
@@ -16,12 +15,14 @@ if (checkAuth()) {
   elLoginLogoutButton.innerText = "Tizimga kirish ➡";
 }
 
+let allCars=[]
 function init() {
   loader(true);
   fetch(BASE_URL + "/cars")
     .then((res) => res.json())
     .then((res) => {
-      ui(res.data);
+      allCars=res.data
+      ui(allCars);
     })
     .catch(() => {})
     .finally(() => {
