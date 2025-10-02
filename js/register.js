@@ -35,6 +35,7 @@ function register(user) {
     })
     .finally(() => {
       registerLoading(false);
+      alert("Ustoz auth ishlamagani uchun siz aytgandek qila olmadim chunki tekshira olmadim lekin qo'ldan kelgancha harakat qildim")
     });
 }
 
