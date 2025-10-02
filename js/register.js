@@ -6,6 +6,13 @@ import {
   elRegisterMassageBox,
 } from "./html-selection.js";
 
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    elRegisterLoading.classList.add("hidden");
+    elRegisterHidden.classList.remove("hidden");
+  }, 2000);
+});
+
 function register(user) {
   registerLoading(true);
   fetch(BASE_URL + "/auth/login", {
@@ -30,13 +37,11 @@ function register(user) {
 
 function registerLoading(bool) {
   if (bool) {
-    setTimeout(() => {
-      elRegisterLoading.classList.add("hidden");
-    }, 2000);
-    // elRegisterHidden.classList.add("hidden");
-  } else {
+    elRegisterHidden.classList.add("hidden");
     elRegisterLoading.classList.remove("hidden");
-    // elRegisterHidden.classList.remove("hidden");
+  } else {
+    elRegisterLoading.classList.add("hidden");
+    elRegisterHidden.classList.remove("hidden");
   }
 }
 
