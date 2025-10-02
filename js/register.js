@@ -27,9 +27,12 @@ function register(user) {
     })
     .then((res) => {
       localStorage.setItem("token", res.access_token);
+      alert("Tizimga muafaqyatli kirdingiz! ✔")
       location.href = "../login.html";
     })
-    .catch(() => {})
+    .catch(() => {
+      alert("Xatolik yuz berdi qayta urunib ko'ring! 💔")
+    })
     .finally(() => {
       registerLoading(false);
     });
