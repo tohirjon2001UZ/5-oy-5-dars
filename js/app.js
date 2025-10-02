@@ -1,13 +1,24 @@
 import { checkAuth } from "./check-auth.js";
 import { BASE_URL, LOADER_COUNT } from "./constants.js";
+import { filterData } from "./filter.js";
 import {
+  elCadrContainer,
   elCadrLoader,
   elCardSkletonTemplate,
+  elClearButton,
+  elFilterLoader,
+  elFilterSelectValue,
+  elFilterType,
+  elFilterZone,
   elInfoModal,
   elLoginLogoutButton,
   elModalLoginButton,
 } from "./html-selection.js";
 import { ui } from "./ui.js";
+
+let selectedFilterType = null;
+let selectedFilterValue = null;
+let filterDataList = null;
 
 if (checkAuth()) {
   elLoginLogoutButton.innerText = "⬅ Tizimdan chiqish";
@@ -15,14 +26,14 @@ if (checkAuth()) {
   elLoginLogoutButton.innerText = "Tizimga kirish ➡";
 }
 
-let allCars=[]
-function init() {
+function init(query) {
   loader(true);
-  fetch(BASE_URL + "/cars")
-    .then((res) => res.json())
+  fetch(BASE_URL + `/cars${query ? query : ""}`)
     .then((res) => {
-      allCars=res.data
-      ui(allCars);
+      return res.json();
+    })
+    .then((res) => {
+      ui(res.data);
     })
     .catch(() => {})
     .finally(() => {
@@ -75,26 +86,6 @@ document.addEventListener("click", (evt) => {
   }
 });
 
-function getById(id) {
-  fetch(`https://json-api.uz/api/project/fn43/cars/${id}`)
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      fill(res);
-    })
-    .finally(() => {});
-}
-
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("delete-btn")) {
-    deleteEl(e.target.id);
-  }
-  if (e.target.classList.contains("edit-btn")) {
-    getById(e.target.id);
-  }
-});
-
 // Start
 init();
 
@@ -113,91 +104,57 @@ elModalLoginButton.addEventListener("click", () => {
   location.href = "/pages/register.html";
 });
 
-// Selection
-
-const typeSelect = document.getElementById("typeSelect");
-const valueSelect = document.getElementById("valueSelect");
-
-typeSelect.addEventListener("change", () => {
-  const selectedType = typeSelect.value;
-
-  let data = [];
-  if (selectedType === "country") {
-    data = [
-      "AQSH",
-      "Yaponiya",
-      "Germaniya",
-      "Koreya",
-      "Shvetsiya",
-      "Buyuk Britaniya",
-      "Fransiya",
-      "Chexiya",
-    ];
-  } else if (selectedType === "category") {
-    data = [
-      "SUV",
-      "Sedan",
-      "Kupe",
-      "Crossover",
-      "Off-road",
-      "Universal",
-      "Pikap",
-    ];
-  } else if (selectedType === "color") {
-    data = [
-      "Po'lat ko'k",
-      "Qora",
-      "Kumush",
-      "Oltin",
-      "Baliq qizil",
-      "Dengiz ko'k",
-      "Kulrang",
-      "Oq",
-      "Qizil",
-      "Jigarrang",
-      "To'q kulrang",
-      "Binafsha",
-      "Yashil",
-      "To'q sariq",
-      "Lavanta",
-      "Bej",
-      "Pushti",
-      "Zaytun",
-      "Sariq",
-      "Dark slate",
-      "Orange",
-      "To'q qizil",
-    ];
+elFilterType.addEventListener("change", (e) => {
+  if (filterDataList) {
+    selectedFilterType = e.target[e.target.selectedIndex].value;
+    const list = filterData(filterDataList, selectedFilterType);
+    displayFilterData(list);
+    elFilterSelectValue.classList.remove("hidden");
   }
+});
 
-  data = [...new Set(data)];
+elFilterSelectValue.addEventListener("change", (e) => {
+  selectedFilterValue = e.target[e.target.selectedIndex].value;
+  elCadrContainer.innerHTML = "";
+  init(`?${selectedFilterType}=${selectedFilterValue}`);
+});
 
-  valueSelect.innerHTML = "<option disabled selected>Select</option>";
-  data.forEach((item) => {
+elClearButton.addEventListener("click", () => {
+  elFilterSelectValue.classList.add("hidden");
+  elCadrContainer.innerHTML = "";
+  init();
+});
+
+// Filter
+
+function dataForFilter() {
+  elFilterLoader.classList.remove("hidden");
+  elFilterZone.classList.add("hidden");
+
+  fetch(BASE_URL + "/cars")
+    .then((res) => res.json())
+    .then((res) => {
+      filterDataList = res.data;
+    })
+    .catch(() => {})
+    .finally(() => {
+      elFilterLoader.classList.add("hidden");
+      elFilterZone.classList.remove("hidden");
+    });
+}
+dataForFilter();
+
+function displayFilterData(arry) {
+  elFilterSelectValue.innerHTML = "";
+  const option = document.createElement("option");
+  option.disabled = true;
+  option.innerText = "All";
+  elFilterSelectValue.append(option);
+  elFilterSelectValue[0].selected = true;
+  arry.forEach((el) => {
     const option = document.createElement("option");
-    option.value = item;
-    option.textContent = item;
-    valueSelect.appendChild(option);
+    option.innerText = el;
+    option.value = el;
+    elFilterSelectValue.appendChild(option);
   });
-});
-
-valueSelect.addEventListener("change", () => {
-  const selectedType = typeSelect.value;
-  const selectedValue = valueSelect.value;
-
-  let filtered = [];
-
-  if (selectedType === "country") {
-    filtered = allCars.filter((car) => car.country === selectedValue);
-  } else if (selectedType === "category") {
-    filtered = allCars.filter((car) => car.category === selectedValue);
-  } else if (selectedType === "color") {
-    filtered = allCars.filter((car) => car.colorName === selectedValue);
-  }
-
-  ui(filtered);
-});
-
-elBtnAllCars.addEventListener("click", () => {
-  location.reload();
-});
+}

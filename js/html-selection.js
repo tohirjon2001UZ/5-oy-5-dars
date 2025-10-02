@@ -5,6 +5,11 @@ const elCardSkletonTemplate = document.getElementById("cardSkletonTemplate");
 // Elements
 const elCadrContainer = document.getElementById("cadrContainer");
 const elLoginLogoutButton = document.getElementById("loginLogoutButton");
+const elFilterType = document.getElementById("filterType");
+const elFilterLoader = document.getElementById("filterLoader");
+const elFilterZone = document.getElementById("filterZone");
+const elFilterSelectValue = document.getElementById("filterSelectValue");
+const elClearButton = document.getElementById("clearButton");
 
 // Elements Details
 
@@ -29,7 +34,6 @@ const elDetailsCountry = document.getElementById("detailsCountry");
 const elDetailsCity = document.getElementById("detailsCity");
 const elDetailsHighWay = document.getElementById("detailsHighWay");
 const elDetailsCombined = document.getElementById("detailsCombined");
-const elBtnAllCars = document.getElementById("btnAllCars");
 
 // Loader
 const elCadrLoader = document.getElementById("cadrLoader");
@@ -68,5 +72,9 @@ export {
   elDetailsCity,
   elDetailsHighWay,
   elDetailsCombined,
-  elBtnAllCars,
+  elFilterType,
+  elFilterLoader,
+  elFilterZone,
+  elFilterSelectValue,
+  elClearButton,
 };
