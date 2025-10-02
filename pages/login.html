@@ -7,17 +7,22 @@
     <link rel="stylesheet" href="../css/output.css" />
   </head>
   <body>
-    <h1>Kirish</h1>
-    <form id="form">
-      <input type="text" placeholder="username" class="input" name="username" />
+    <h1 class="text-center text-4xl mt-6">Kirish</h1>
+    <form class="text-center mt-40" id="form">
+      <input type="text" placeholder="username" class="input mb-4" name="username" /><br>
       <input
         type="password"
         placeholder="password"
         class="input"
         name="password"
-      />
-      <button class="btn btn-neutral">Kirish</button>
+      /> <br>
+      <button class="btn btn-neutral mt-4">Kirish</button>
     </form>
+
+     <div
+      id="massageBox"
+      class="fixed bottom-0 right-0 m-4 px-4 py-2 rounded-lg shadow-lg hidden"
+    ></div>
 
     <script type="module" src="../js/login.js"></script>
   </body>

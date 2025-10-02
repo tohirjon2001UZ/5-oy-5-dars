@@ -10,6 +10,8 @@ const elFilterLoader = document.getElementById("filterLoader");
 const elFilterZone = document.getElementById("filterZone");
 const elFilterSelectValue = document.getElementById("filterSelectValue");
 const elClearButton = document.getElementById("clearButton");
+const elMassageBox = document.getElementById("massageBox");
+const elRegisterMassageBox = document.getElementById("registerMassageBox");
 
 // Elements Details
 
@@ -37,6 +39,10 @@ const elDetailsCombined = document.getElementById("detailsCombined");
 
 // Elements Login
 const elLoginForm = document.getElementById("form");
+// Elements Register
+const elRegisterForm = document.getElementById("registerForm");
+const elRegisterLoading = document.getElementById("registerLoading");
+const elRegisterHidden = document.getElementById("registerHidden");
 
 // Loader
 const elCadrLoader = document.getElementById("cadrLoader");
@@ -81,4 +87,9 @@ export {
   elFilterSelectValue,
   elClearButton,
   elLoginForm,
+  elMassageBox,
+  elRegisterMassageBox,
+  elRegisterForm,
+  elRegisterLoading,
+  elRegisterHidden,
 };

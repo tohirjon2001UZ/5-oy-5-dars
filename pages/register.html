@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ro'yhatdan o'tish</title>
-</head>
-<body>
-    <h1>Ro'yhatdan o'tish</h1>
-</body>
+    <link rel="stylesheet" href="../css/output.css" />
+  </head>
+  <body>
+    <div class="hidden" id="registerHidden">
+        <h1 class="text-center text-4xl mt-6">Ro'yhatdan o'tish</h1>
+    <form class="text-center mt-40" id="registerForm">
+      <input
+        type="text"
+        placeholder="username"
+        class="input mb-4"
+        name="username"
+      /><br />
+      <input
+        type="password"
+        placeholder="password"
+        class="input"
+        name="password"
+      />
+      <br />
+      <button class="btn btn-neutral mt-4">Kirish</button>
+    </form>
+    </div>
+
+    <div
+      id="registerMassageBox"
+      class="fixed bottom-0 right-0 m-4 px-4 py-2 rounded-lg shadow-lg hidden"
+    ></div>
+
+    <!-- Loading -->
+    <div>
+      <span
+        class="loading loading-spinner flex justify-center items-center mt-[300px] ml-[750px]"
+        id="registerLoading"
+      ></span>
+    </div>
+
+    <script type="module" src="../js/register.js"></script>
+  </body>
 </html>

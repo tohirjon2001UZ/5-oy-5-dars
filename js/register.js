@@ -1,7 +1,13 @@
 import { BASE_URL } from "./constants.js";
-import { elLoginForm, elMassageBox } from "./html-selection.js";
+import {
+  elRegisterForm,
+  elRegisterHidden,
+  elRegisterLoading,
+  elRegisterMassageBox,
+} from "./html-selection.js";
 
-function login(user) {
+function register(user) {
+  registerLoading(true);
   fetch(BASE_URL + "/auth/login", {
     method: "POST",
     headers: {
@@ -14,10 +20,24 @@ function login(user) {
     })
     .then((res) => {
       localStorage.setItem("token", res.access_token);
-      location.href = "../index.html";
+      location.href = "../login.html";
     })
     .catch(() => {})
-    .finally(() => {});
+    .finally(() => {
+      registerLoading(false);
+    });
+}
+
+function registerLoading(bool) {
+  if (bool) {
+    setTimeout(() => {
+      elRegisterLoading.classList.add("hidden");
+    }, 2000);
+    // elRegisterHidden.classList.add("hidden");
+  } else {
+    elRegisterLoading.classList.remove("hidden");
+    // elRegisterHidden.classList.remove("hidden");
+  }
 }
 
 function validation(arry) {
@@ -38,7 +58,7 @@ function validation(arry) {
   return false;
 }
 
-elLoginForm.addEventListener("submit", (e) => {
+elRegisterForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const result = [];
@@ -49,22 +69,22 @@ elLoginForm.addEventListener("submit", (e) => {
   const check = validation(result);
 
   if (check) {
-    elLoginForm[check.target].focus();
+    elRegisterForm[check.target].focus();
 
-    elMassageBox.classList.remove("hidden");
-    elMassageBox.classList.add("bg-red-500", "text-white");
+    elRegisterMassageBox.classList.remove("hidden");
+    elRegisterMassageBox.classList.add("bg-red-500", "text-white");
 
-    elMassageBox.innerHTML = "";
+    elRegisterMassageBox.innerHTML = "";
 
     const p = document.createElement("p");
     p.innerText = check.message;
-    elMassageBox.append(p);
+    elRegisterMassageBox.append(p);
 
     setTimeout(() => {
       p.remove();
-      elMassageBox.classList.add("hidden");
+      elRegisterMassageBox.classList.add("hidden");
     }, 2000);
   } else {
-    login(result);
+    register(result);
   }
 });
