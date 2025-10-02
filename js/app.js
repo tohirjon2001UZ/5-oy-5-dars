@@ -63,13 +63,21 @@ document.addEventListener("click", (evt) => {
   // Delet
   if (evt.target.classList.contains("js-delete")) {
     if (checkAuth()) {
-      fetch(`https://json-api.uz/api/project/fn43/cars/${id}`, {
+      const token = localStorage.getItem("token");
+      fetch(BASE_URL + `/cars/${evt.target.id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
         .then((res) => {
+          return res.text();
+        })
+        .then((res) => {
+          alert(res);
+          elCadrContainer.innerHTML = "";
           init();
         })
-        .then((res) => {})
         .finally(() => {});
     } else {
       elInfoModal.showModal();
@@ -101,7 +109,7 @@ elLoginLogoutButton.addEventListener("click", () => {
 });
 
 elModalLoginButton.addEventListener("click", () => {
-  location.href = "/pages/register.html";
+  location.href = "/pages/login.html";
 });
 
 elFilterType.addEventListener("change", (e) => {

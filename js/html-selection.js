@@ -35,6 +35,9 @@ const elDetailsCity = document.getElementById("detailsCity");
 const elDetailsHighWay = document.getElementById("detailsHighWay");
 const elDetailsCombined = document.getElementById("detailsCombined");
 
+// Elements Login
+const elLoginForm = document.getElementById("form");
+
 // Loader
 const elCadrLoader = document.getElementById("cadrLoader");
 
@@ -77,4 +80,5 @@ export {
   elFilterZone,
   elFilterSelectValue,
   elClearButton,
+  elLoginForm,
 };
